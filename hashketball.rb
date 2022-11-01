@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -127,3 +129,64 @@ def game_hash
 end
 
 # Write code here
+def all_players
+  game_hash[:home][:players] + game_hash[:away][:players]
+  # game_hash[:home][:players].concat(game_hash[:away][:players])
+end
+
+def get_player(playeR)
+  all_players.find {|player| player[:player_name] == playeR}
+  # all_players.filter {|player| player[:player_name] == playeR}[0]
+end
+
+def get_team(teaM)
+  game_hash[:home][:team_name] == teaM ? game_hash[:home] : game_hash[:away]
+end
+
+def num_points_scored(playeR)
+  get_player(playeR)[:points]
+end
+
+def shoe_size(playeR)
+  get_player(playeR)[:shoe]
+end
+
+def team_colors(team_name)
+  team_name == "Brooklyn Nets" ? game_hash[:home][:colors] : game_hash[:away][:colors]
+end
+
+def team_names
+  game_hash.map do |location, team_data|
+    team_data[:team_name]
+  end
+end
+
+def player_numbers(teaM)
+  get_team(teaM)[:players].map do |player|
+    player[:number]
+  end
+end
+
+def player_stats(playeR)
+  get_player(playeR)
+end
+
+def big_shoe_player
+  all_players.max_by do |player|
+    player[:shoe]
+  end
+end
+
+def big_shoe_rebounds
+  big_shoe_player[:rebounds]
+end
+
+def most_points_scored
+  all_players.max_by do |player|
+    player[:points]
+  end
+end
+
+
+
+# binding.pry
